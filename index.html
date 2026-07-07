@@ -316,20 +316,20 @@ body.detail-open{overflow:hidden}
 
       <h3>Activities</h3>
       <ul class="links">
-        <li><a href="#">2026 ミツカル株式会社 内定者インターン（2027年春 子会社社長 就任予定）</a></li>
-        <li><a href="#">2026 Bloomo証券（ブルーモ証券）インターン</a></li>
-        <li><a href="#">2026.4「sand」リピート率分析・AI活用施策 推進</a></li>
-        <li><a href="#">2025 LinkedIn Student Club — LAS VEGAS 海外体験プログラム選出</a></li>
-        <li><a href="#">2025「就活サバイバルNEO」99人目の参加者に選出・社長4名の前でソロピッチ登壇</a></li>
-        <li><a href="#">2025「Earth hacks デカボチャレンジ」共創プログラム参加</a></li>
-        <li><a href="#">2025.6「塾生メシ」運営チーム 参加</a></li>
-        <li><a href="#">2024「UNIDOL」アイドルコピーダンスで全国の舞台へ</a></li>
+        <li><a href="#d-mitsukaru">2026 ミツカル株式会社 内定者インターン（2027年春 子会社社長 就任予定）</a></li>
+        <li><a href="#d-bloomo">2026 Bloomo証券（ブルーモ証券）インターン</a></li>
+        <li><a href="#d-sand">2026.4「sand」リピート率分析・AI活用施策 推進</a></li>
+        <li><a href="#d-lasvegas">2025 LinkedIn Student Club — LAS VEGAS 海外体験プログラム選出</a></li>
+        <li><a href="#d-neo">2025「就活サバイバルNEO」99人目の参加者に選出・社長4名の前でソロピッチ登壇</a></li>
+        <li><a href="#d-dekabo">2025「Earth hacks デカボチャレンジ」共創プログラム参加</a></li>
+        <li><a href="#d-jukusei">2025.6「塾生メシ」運営チーム 参加</a></li>
+        <li><a href="#d-sayomora">2024「UNIDOL」アイドルコピーダンスで全国の舞台へ</a></li>
       </ul>
 
       <h3>Research</h3>
-      <ul>
-        <li>2026 自社株買いの実証研究（TSE Prime企業パネル分析）</li>
-        <li>2025 J. フロント リテイリング 財務提案（経営系研究会）</li>
+      <ul class="links">
+        <li><a href="#d-yasuda">2026 自社株買いの実証研究（TSE Prime企業パネル分析）</a></li>
+        <li><a href="#d-yasudapw">2025 J. フロント リテイリング 財務提案（経営系研究会）</a></li>
       </ul>
     </div>
   </div>
@@ -411,12 +411,15 @@ const DETAILS = {
   body:['慶應義塾大学 総合政策学部の保田隆明研究会に所属。企業分析・IR資料作成を専門とする研究会で、財務・経営領域を中心に学んでいます。','自社株買いの実証研究（パネル回帰分析）など、データに基づいた企業財務の研究に取り組んでいます。']},
  'd-yasudapw': {title:'保田研プロジェクトワーク — J. フロント リテイリング コーポレートファイナンス提案', date:'2025', cat:'Finance', img:'#wimg-yasudapw', back:'#works',
   body:['研究会のプロジェクトワークとして、J. フロント リテイリングへのコーポレートファイナンス提案に取り組みました。','財務データの分析から企業価値向上の打ち手を検討し、提案としてまとめる実践的なプロジェクトです。']},
+ 'd-mitsukaru': {title:'ミツカル株式会社 内定者インターン — 2027年春 子会社社長 就任予定', date:'2026 -', cat:'Career', img:null, back:'#about',
+  body:['就活サバイバルNEOで99人目の参加者として選出されたことをきっかけに、ミツカル株式会社の内定者インターンとして働いています。','2027年春には新卒1年目で子会社社長に就任予定。現在はテレアポをはじめとする現場の業務に向き合いながら、経営者としての基礎を磨いています。']},
  'd-jukusei': {title:'#塾生メシ', date:'2025.06 -', cat:'Project', img:'.proj.left .ph img', back:'#project',
   body:['学生×社会人をつなぐコミュニティ「塾生メシ」の運営チームの一員として活動しています。','イベントの企画運営とSNS広報を担当し、学生が社会人の先輩と気軽につながれる場づくりに取り組んでいます。']},
  'd-dekabo': {title:'#デカボチャレンジ', date:'2025.08 -', cat:'Project', img:'.proj.right .ph img', back:'#project',
   body:['Earth hacks 主催の共創プログラム「デカボチャレンジ」に参加しました。','脱炭素を「おもしろい方」から考えるマーケティングに挑戦し、チームでの最終発表まで走り切りました。']}
 };
 const dEl = document.getElementById('detail');
+let lastPos = null;
 function route(){
   const d = DETAILS[location.hash.slice(1)];
   if(d){
@@ -427,9 +430,10 @@ function route(){
     if(src){ im.src = src.src; im.alt = d.title; ph.hidden = false; } else { ph.hidden = true; }
     dEl.querySelector('.detail-body').innerHTML = d.body.map(p=>'<p>'+p+'</p>').join('');
     dEl.querySelector('.detail-links').innerHTML = (d.links||[]).map(l=>'<a target="_blank" rel="noopener" href="'+l[1]+'">'+l[0]+'</a>').join('');
-    dEl.querySelector('.detail-back').setAttribute('href', d.back || '#works');
+    dEl.querySelector('.detail-back').setAttribute('href', lastPos || d.back || '#works');
     dEl.hidden = false; document.body.classList.add('detail-open'); dEl.scrollTop = 0;
   } else {
+    lastPos = location.hash || null;
     dEl.hidden = true; document.body.classList.remove('detail-open');
   }
 }
